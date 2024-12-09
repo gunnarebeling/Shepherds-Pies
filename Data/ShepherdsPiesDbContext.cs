@@ -209,20 +209,23 @@ public class ShepherdsPiesDbContext : IdentityDbContext<IdentityUser>
             {
                 Id = 1,
                 OrderDate = DateTime.Now,
-                OrderEmployeeId = 1,   
+                OrderEmployeeId = 1,
+                Tip = 10m   
             },
             new Order
             {
                 Id = 2,
                 OrderDate = DateTime.Now,
                 OrderEmployeeId = 2,
-                DeliveryEmployeeId = 1   
+                DeliveryEmployeeId = 1,
+                Tip = 5m   
             },
             new Order
             {
                 Id = 3,
                 OrderDate = DateTime.Now,
-                OrderEmployeeId = 1   
+                OrderEmployeeId = 1,
+                Tip = 7m 
             }
         });
         modelBuilder.Entity<Pizza>().HasData(new Pizza[]

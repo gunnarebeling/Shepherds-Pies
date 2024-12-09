@@ -8,11 +8,12 @@ public class AutoMapperProfiles : Profile
     {
 
         CreateMap<Order, OrderDTO>();
-        
+        CreateMap<OrderDTO, SimpleOrderDTO>();
         CreateMap<Pizza, PizzaForOrderDTO>();
         CreateMap<Size, SizeDTO>();
         CreateMap<Topping, ToppingDTO>();
         CreateMap<Employee, EmployeeDTO>();
+        CreateMap<Employee, SimpleEmployeeDTO>();
         
         
 

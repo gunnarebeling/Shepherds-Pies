@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/prop-types */
 import { useContext, useState } from "react";
 import { NavLink as RRNavLink } from "react-router-dom";
@@ -24,28 +25,16 @@ return (
     <div>
     <Navbar color="light" light fixed="true" expand="lg">
         <NavbarBrand className="mr-auto" tag={RRNavLink} to="/">
-        🧹🧼House Rules
+        🍕 Shepherd's Pies
         </NavbarBrand>
         {loggedInUser ? (
         <>
             <NavbarToggler onClick={toggleNavbar} />
             <Collapse isOpen={open} navbar>
             <Nav navbar>
-            {loggedInUser.roles.includes("Admin") && (
-                <NavItem onClick={() => setOpen(false)}>
-                <NavLink tag={RRNavLink} to="/userprofiles">
-                    UserProfiles
-                </NavLink>
-                </NavItem>
-            )}
             <NavItem onClick={() => setOpen(false)}>
-            <NavLink tag={RRNavLink} to="/chores">
-                Chores
-            </NavLink>
-            </NavItem>
-            <NavItem onClick={() => setOpen(false)}>
-            <NavLink tag={RRNavLink} to="/chores/mychores">
-                My Chores
+            <NavLink tag={RRNavLink} to="/orders">
+                Orders
             </NavLink>
             </NavItem>
             

@@ -16,4 +16,6 @@ public class Order
     public Employee? DeliveryEmployee {get; set;}
     public bool Completed { get; set; } = false;
     public List<Pizza> Pizzas { get; set; }
+
+    public decimal Tip { get; set; }
 }

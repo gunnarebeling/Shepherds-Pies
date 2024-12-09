@@ -10,11 +10,11 @@ namespace ShepherdsPies.Controllers;
 
 [Controller]
 [Route("api/[controller]")]
-public class OrderController: Controller
+public class OrdersController: Controller
 {
     private ShepherdsPiesDbContext _DbContext;
     private IMapper _mapper;
-    public OrderController( ShepherdsPiesDbContext db, IMapper mapper)
+    public OrdersController( ShepherdsPiesDbContext db, IMapper mapper)
     {
         _DbContext = db;
         _mapper = mapper;
@@ -25,6 +25,10 @@ public class OrderController: Controller
     public IActionResult Get()
     {
         List<OrderDTO> orders =  _DbContext.Orders.ProjectTo<OrderDTO>(_mapper.ConfigurationProvider).ToList();
-        return Ok(orders);
+        List<SimpleOrderDTO> simpleOrders = orders.Select(o => {
+            SimpleOrderDTO simpleOrder = _mapper.Map<SimpleOrderDTO>(o);
+            return simpleOrder;
+        }).OrderByDescending(a => a.OrderDate).ToList();
+        return Ok(simpleOrders);
     }
 }

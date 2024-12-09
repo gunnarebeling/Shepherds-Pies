@@ -242,7 +242,8 @@ namespace Shepherds_pies.Migrations
                     OrderDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     OrderEmployeeId = table.Column<int>(type: "integer", nullable: false),
                     DeliveryEmployeeId = table.Column<int>(type: "integer", nullable: true),
-                    Completed = table.Column<bool>(type: "boolean", nullable: false)
+                    Completed = table.Column<bool>(type: "boolean", nullable: false),
+                    Tip = table.Column<decimal>(type: "numeric", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -334,8 +335,8 @@ namespace Shepherds_pies.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "a4b9c99e-87ab-4c5a-9d53-1e3f5248a1b0", 0, "99c858d5-cb6f-4f5e-ba3a-b2a93eb1f414", "johndoe@example.com", false, false, null, null, null, "AQAAAAIAAYagAAAAEPJxMMVU8NQl+VefYPwKmzfd9u8+TRGlzhiF7sme4jP5mR61MtO5gPYkby0Inwc6jg==", null, false, "0350b162-e376-4c34-80b9-5284b3c09395", false, "JohnDoe" },
-                    { "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f", 0, "15d2cd8e-026b-4a0a-abf7-bba7ae7a12f6", "admina@strator.comx", false, false, null, null, null, "AQAAAAIAAYagAAAAEFWGpUE6Uq/P3M3lIGjZHYRvySDRbW3d3ZpLf380Wg5WQn/cJAHhEopu0WZYMJqwwg==", null, false, "ac369dfb-0999-464a-bc55-0534cc7f578b", false, "Administrator" }
+                    { "a4b9c99e-87ab-4c5a-9d53-1e3f5248a1b0", 0, "6087c4ca-8252-4d89-a54d-4225ebebd14f", "johndoe@example.com", false, false, null, null, null, "AQAAAAIAAYagAAAAEJqy9upKcCqxgvKIsAec2Lzcp4alcZTHZvRqAe4gBsPljKWuryqVWAbhpXRC5XYP6Q==", null, false, "e8c6dd9d-d676-4eb9-9511-cec3a39447d7", false, "JohnDoe" },
+                    { "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f", 0, "29ab9789-e7b4-4fcd-9acd-4c946643ec16", "admina@strator.comx", false, false, null, null, null, "AQAAAAIAAYagAAAAEB3eq6CxZdYrw17ea+eenxdzS7S2f1PayLbWQsc8xdDnEccvJJS2CGw68RL6g3k+Rg==", null, false, "598e42ae-0569-4be0-8e95-c47e6f18a34f", false, "Administrator" }
                 });
 
             migrationBuilder.InsertData(
@@ -401,12 +402,12 @@ namespace Shepherds_pies.Migrations
 
             migrationBuilder.InsertData(
                 table: "Orders",
-                columns: new[] { "Id", "Completed", "DeliveryEmployeeId", "OrderDate", "OrderEmployeeId" },
+                columns: new[] { "Id", "Completed", "DeliveryEmployeeId", "OrderDate", "OrderEmployeeId", "Tip" },
                 values: new object[,]
                 {
-                    { 1, false, null, new DateTime(2024, 12, 6, 14, 0, 37, 176, DateTimeKind.Local).AddTicks(3660), 1 },
-                    { 2, false, 1, new DateTime(2024, 12, 6, 14, 0, 37, 176, DateTimeKind.Local).AddTicks(3690), 2 },
-                    { 3, false, null, new DateTime(2024, 12, 6, 14, 0, 37, 176, DateTimeKind.Local).AddTicks(3690), 1 }
+                    { 1, false, null, new DateTime(2024, 12, 9, 9, 30, 36, 492, DateTimeKind.Local).AddTicks(8730), 1, 10m },
+                    { 2, false, 1, new DateTime(2024, 12, 9, 9, 30, 36, 492, DateTimeKind.Local).AddTicks(8770), 2, 5m },
+                    { 3, false, null, new DateTime(2024, 12, 9, 9, 30, 36, 492, DateTimeKind.Local).AddTicks(8770), 1, 7m }
                 });
 
             migrationBuilder.InsertData(

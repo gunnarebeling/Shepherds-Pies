@@ -12,8 +12,8 @@ using ShepherdsPies.Data;
 namespace Shepherds_pies.Migrations
 {
     [DbContext(typeof(ShepherdsPiesDbContext))]
-    [Migration("20241206222056_pizza3")]
-    partial class pizza3
+    [Migration("20241209172028_timezonebehavior")]
+    partial class timezonebehavior
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -152,13 +152,13 @@ namespace Shepherds_pies.Migrations
                         {
                             Id = "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1fa4915b-504f-480d-b2dd-c352ce0acc43",
+                            ConcurrencyStamp = "349355b4-2b2d-4501-978e-46f79f18d1bc",
                             Email = "admina@strator.comx",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEMp+99m0oT9cZgzvy4Bhz5Dft5vsG0Ys6go9zTLrKmKvjbo9eK801spJm7yEv8jpwg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEI/9lC1jwKipTrdGX8mTFofRZpTvHFtfsj7xHZ0vHTm28FpZrIXVCsdNglZp1ZX/NA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e8bbc4aa-ac3c-4184-82e0-51946a2c17f8",
+                            SecurityStamp = "f0d8d373-dd3f-4c4a-8f34-a45523b4b9c5",
                             TwoFactorEnabled = false,
                             UserName = "Administrator"
                         },
@@ -166,13 +166,13 @@ namespace Shepherds_pies.Migrations
                         {
                             Id = "a4b9c99e-87ab-4c5a-9d53-1e3f5248a1b0",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "26fb8d49-dfeb-4551-b03e-889801648277",
+                            ConcurrencyStamp = "92e30f44-a20a-47d3-8cef-a9a1569ce34d",
                             Email = "johndoe@example.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEPe7iaKWA4Bk2eBFzSyDUYN6LkRI82eTOzFcCtUpZqoaUXn6nUs0YOCx9GBV+6ApyQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAzCSPmTjisFwrmMb9MKhLrY1wgSr7RKrZOZDt5kLAr1Udzppz+dmo2wupKZmXaIMw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "520de99c-4f12-4e8e-9717-e5835b8058c2",
+                            SecurityStamp = "f4bfdb7f-c52d-4ef5-b048-e9953b21c239",
                             TwoFactorEnabled = false,
                             UserName = "JohnDoe"
                         });
@@ -415,6 +415,9 @@ namespace Shepherds_pies.Migrations
                     b.Property<int>("OrderEmployeeId")
                         .HasColumnType("integer");
 
+                    b.Property<decimal>("Tip")
+                        .HasColumnType("numeric");
+
                     b.HasKey("Id");
 
                     b.HasIndex("DeliveryEmployeeId");
@@ -428,23 +431,26 @@ namespace Shepherds_pies.Migrations
                         {
                             Id = 1,
                             Completed = false,
-                            OrderDate = new DateTime(2024, 12, 6, 16, 20, 56, 228, DateTimeKind.Local).AddTicks(8850),
-                            OrderEmployeeId = 1
+                            OrderDate = new DateTime(2024, 12, 9, 11, 20, 27, 999, DateTimeKind.Local).AddTicks(1460),
+                            OrderEmployeeId = 1,
+                            Tip = 10m
                         },
                         new
                         {
                             Id = 2,
                             Completed = false,
                             DeliveryEmployeeId = 1,
-                            OrderDate = new DateTime(2024, 12, 6, 16, 20, 56, 228, DateTimeKind.Local).AddTicks(8880),
-                            OrderEmployeeId = 2
+                            OrderDate = new DateTime(2024, 12, 9, 11, 20, 27, 999, DateTimeKind.Local).AddTicks(1490),
+                            OrderEmployeeId = 2,
+                            Tip = 5m
                         },
                         new
                         {
                             Id = 3,
                             Completed = false,
-                            OrderDate = new DateTime(2024, 12, 6, 16, 20, 56, 228, DateTimeKind.Local).AddTicks(8880),
-                            OrderEmployeeId = 1
+                            OrderDate = new DateTime(2024, 12, 9, 11, 20, 27, 999, DateTimeKind.Local).AddTicks(1490),
+                            OrderEmployeeId = 1,
+                            Tip = 7m
                         });
                 });
 

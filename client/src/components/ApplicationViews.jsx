@@ -5,6 +5,7 @@ import Login from "./auth/Login";
 import Register from "./auth/Register";
 import { UserContext } from "../App";
 import { useContext } from "react";
+import { OrdersList } from "./Orders/OrdersList";
 
 export default function ApplicationViews() {
   const { loggedInUser, setLoggedInUser } = useContext(UserContext)
@@ -17,7 +18,7 @@ export default function ApplicationViews() {
           index
           element={
             <AuthorizedRoute loggedInUser={loggedInUser}>
-              <div>orderlist</div>
+              <OrdersList/>
             </AuthorizedRoute>
           }
         />
