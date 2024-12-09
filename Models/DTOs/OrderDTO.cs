@@ -8,6 +8,8 @@ public class OrderDTO
     public int Id { get; set; }
     public DateTime OrderDate { get; set; }
     public int? DeliveryEmployeeId { get; set; }
+    public int OrderEmployeeId { get; set; }
+    public SimpleEmployeeDTO OrderEmployee { get; set; }
     public SimpleEmployeeDTO? DeliveryEmployee {get; set;}
     public bool Completed { get; set; } = false;
     public List<PizzaForOrderDTO> Pizzas { get; set; }
@@ -17,10 +19,11 @@ public class OrderDTO
     {
         get
         {
-            return Pizzas.Aggregate(0m, (total, p) => {
+            decimal preTotal =  Pizzas.Aggregate(0m, (total, p) => {
                  total += p.PizzaTotal;
-                 return total + Tip;
+                 return total;
             });
+            return preTotal + Tip;
         }
     }
 

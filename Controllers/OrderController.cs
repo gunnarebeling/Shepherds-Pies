@@ -21,7 +21,7 @@ public class OrdersController: Controller
     }
 
     [HttpGet]
-    // [Authorize]
+    [Authorize]
     public IActionResult Get()
     {
         List<OrderDTO> orders =  _DbContext.Orders.ProjectTo<OrderDTO>(_mapper.ConfigurationProvider).ToList();
@@ -30,5 +30,12 @@ public class OrdersController: Controller
             return simpleOrder;
         }).OrderByDescending(a => a.OrderDate).ToList();
         return Ok(simpleOrders);
+    }
+    [HttpGet("{id}")]
+    [Authorize]
+    public IActionResult Get(string id)
+    {
+        OrderDTO order =  _DbContext.Orders.ProjectTo<OrderDTO>(_mapper.ConfigurationProvider).Single(o => o.Id == int.Parse(id));
+        return Ok(order);
     }
 }

@@ -3,6 +3,7 @@ import { getAllOrders } from "../../managers/orderManager"
 import { FilterDate } from "./FilterDate"
 import { Table } from "reactstrap"
 import { Link } from "react-router-dom"
+import { formatPrice, formatTime } from "../../managers/formatingManager"
 
 
 export const OrdersList = () => {
@@ -20,27 +21,6 @@ export const OrdersList = () => {
 
     }, [allOrders])
 
-    const formatTime = (dateTime) => {
-        
-        const date = new Date(dateTime.slice(0,-1));
-      
-        let hours = date.getHours();
-        const minutes = date.getMinutes().toString().padStart(2, "0");
-        const ampm = hours >= 12 ? "PM" : "AM";
-      
-       
-        hours = hours % 12 || 12; 
-      
-        return `${hours}:${minutes} ${ampm}`;
-      };
-      const formatPrice = (price) => {
-        return price.toLocaleString('en-US', {
-            style: 'currency',
-            currency: 'USD',
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-          });
-      }
 
     return (
         <div className="container">
@@ -68,7 +48,7 @@ export const OrdersList = () => {
                                 <td>{o.deliveryEmployee ? "Delivery" : "Dine-In"}</td>
                                 <td>{formatPrice(o.total)}</td>
                                 <td>
-                                    <Link to={`${o.id}`} >details</Link>
+                                    <Link to={`/orders/${o.id}`} >details</Link>
                                 </td>
                                 <td>
                                     <Link to={`${o.id}/edit`} >edit/cancel</Link>

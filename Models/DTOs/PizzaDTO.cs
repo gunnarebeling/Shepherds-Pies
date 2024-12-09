@@ -10,6 +10,10 @@ public class PizzaForOrderDTO
     public int Id { get; set; }
     public int SizeId { get; set; }
     public SizeDTO Size { get; set; }
+    public int CheeseId { get; set; }
+    public CheeseDTO Cheese { get; set; }
+    public int SauceId { get; set; }
+    public SauceDTO Sauce { get; set; }
     public List<ToppingDTO> Toppings { get; set; }
     public decimal PizzaTotal 
     {
