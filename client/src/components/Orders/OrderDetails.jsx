@@ -76,7 +76,7 @@ export const OrderDetails = () => {
                                     </ul>
                                 </td>
                                 <td>{formatPrice(p.pizzaTotal)}</td>
-                                <td><Link className="m-2">edit</Link></td>
+                                <td><Link className="m-2">edit </Link></td>
                                 <td><Link>delete</Link></td>
                 
                             </tr>
