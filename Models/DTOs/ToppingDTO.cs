@@ -9,3 +9,8 @@ public class ToppingDTO
     public string Type { get; set; }
     
 }
+
+public class ToppingForPostDTO
+{
+    public int ToppingId { get; set; }
+}

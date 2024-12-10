@@ -68,12 +68,15 @@ export const OrderDetails = () => {
                                 <th >{p.size?.type}</th>
                                 <td>{p.cheese?.type}</td>
                                 <td>{p.sauce?.type}</td>
-                                <td>
-                                    <ul>
+                                <td>{
+                                    p.toppings?.length > 0 ? 
+                                    (<ul>
                                         {p.toppings?.map(t => {
                                             return <li key={t.id}>{t.type}</li>
                                         })}
-                                    </ul>
+                                    </ul>) :
+                                    "no toppings"
+                                    }
                                 </td>
                                 <td>{formatPrice(p.pizzaTotal)}</td>
                                 <td><Link className="m-2">edit </Link></td>

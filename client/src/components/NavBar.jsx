@@ -37,6 +37,11 @@ return (
                 Orders
             </NavLink>
             </NavItem>
+            <NavItem onClick={() => setOpen(false)}>
+            <NavLink tag={RRNavLink} to="/orders/create">
+                Create Order
+            </NavLink>
+            </NavItem>
             
             </Nav>
             </Collapse>
