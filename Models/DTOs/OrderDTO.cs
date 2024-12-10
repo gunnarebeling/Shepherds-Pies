@@ -39,3 +39,11 @@ public class SimpleOrderDTO
     public decimal Total {get; set;}
     
 }
+public class OrderForPostDTO
+{
+    public int? DeliveryEmployeeId { get; set; }
+    public int OrderEmployeeId { get; set; }
+   public decimal Tip { get; set; }
+   public List<PizzaForPostDTO> Pizzas { get; set; }
+
+}

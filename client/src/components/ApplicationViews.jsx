@@ -8,6 +8,7 @@ import { useContext } from "react";
 import { OrdersList } from "./Orders/OrdersList";
 import { OrderDetails } from "./Orders/OrderDetails";
 import { Home } from "./Home";
+import { CreateOrder } from "./Orders/CreateOrder";
 
 export default function ApplicationViews() {
   const { loggedInUser, setLoggedInUser } = useContext(UserContext)
@@ -25,8 +26,21 @@ export default function ApplicationViews() {
           }
         />
         <Route path="/orders">
-          <Route index element={<OrdersList/>}/>
-          <Route path=":id" element={<OrderDetails/>}/>
+          <Route index element={
+            <AuthorizedRoute loggedInUser={loggedInUser}>
+              <OrdersList/>
+            </AuthorizedRoute>
+            }/>
+          <Route path=":id" element={
+            <AuthorizedRoute loggedInUser={loggedInUser}>
+              <OrderDetails/>
+            </AuthorizedRoute>
+            }/>
+          <Route path="create" element={
+            <AuthorizedRoute loggedInUser={loggedInUser}>
+              <CreateOrder loggedInUser={loggedInUser}/>
+            </AuthorizedRoute>
+            }/>
 
         </Route>
         <Route

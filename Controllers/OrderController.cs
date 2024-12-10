@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using ShepherdsPies.Data;
 using ShepherdsPies.Models.DTOs;
 using ShepherdsPies.Models;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace ShepherdsPies.Controllers;
 
@@ -37,5 +38,22 @@ public class OrdersController: Controller
     {
         OrderDTO order =  _DbContext.Orders.ProjectTo<OrderDTO>(_mapper.ConfigurationProvider).Single(o => o.Id == int.Parse(id));
         return Ok(order);
+    }
+
+    [HttpPost]
+    [Authorize]
+    public IActionResult PostNewOrder([FromBody] OrderForPostDTO order)
+    {
+        Order NewOrder = _mapper.Map<Order>(order);
+        NewOrder.OrderDate = DateTime.Now;
+        NewOrder.Pizzas.ForEach(p => {
+            List<Topping> newToppings = _DbContext.Toppings
+            .Where(t => p.Toppings.Select(tp => tp.Id).Contains(t.Id))
+            .ToList();
+            p.Toppings = newToppings;
+        });
+        _DbContext.Orders.Add(NewOrder);
+        _DbContext.SaveChanges();
+        return Created($"/api/orders/{NewOrder.Id}", NewOrder);
     }
 }

@@ -25,3 +25,12 @@ public class PizzaForOrderDTO
     }
 }
 
+public class PizzaForPostDTO
+{
+    public int SizeId { get; set; }
+    public int CheeseId { get; set; }
+    public int SauceId { get; set; }
+    public List<ToppingDTO> Toppings { get; set; }
+
+}   
+
