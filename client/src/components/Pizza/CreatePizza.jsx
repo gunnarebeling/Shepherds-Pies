@@ -1,11 +1,12 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, FormFeedback } from 'reactstrap';
 import { getAllSizes } from '../../managers/sizeManager';
 import { getAllCheeses } from '../../managers/cheeseManager';
 import { getAllSauces } from '../../managers/sauceManager';
 import { formatPrice } from '../../managers/formatingManager';
 import { ToppingsSelection } from './ToppingsSelection';
+import * as Yup from "yup";
 
 export const CreatePizza = ({formData, setFormData}) => {
   const [modal, setModal] = useState(false)
@@ -13,6 +14,7 @@ export const CreatePizza = ({formData, setFormData}) => {
   const [allSizes, setAllSizes] = useState([])
   const [allCheese, setAllCheese] = useState([])
   const [allSauce, setAllSauce] = useState([])
+  const [errors, setErrors] = useState({});
   
   const [pizzaForm, setPizzaForm] = useState({
         id: 0,
@@ -22,7 +24,10 @@ export const CreatePizza = ({formData, setFormData}) => {
         toppings: []
   });
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
-  const toggle = () => setModal(!modal);
+  const toggle = () => {
+    setModal(!modal)
+    setErrors({})
+  };
 
   useEffect(() => {
     getAllSizes().then(setAllSizes)
@@ -38,12 +43,31 @@ export const CreatePizza = ({formData, setFormData}) => {
     }
     setPizzaForm(copy)
   }
-  const onAddPizza = () => {
-    let copy = {...formData}
-    pizzaForm.id = formData.pizzas?.length ? formData.pizzas.length + 1 : 1
-    copy.pizzas.push(pizzaForm)
-    setFormData(copy)
-    toggle()
+
+  const validationSchema = Yup.object().shape({
+    sizeId: Yup.number().typeError("must choose a size"),
+    cheeseId: Yup.number().typeError("must choose a cheese type"),
+    sauceId: Yup.number().typeError("must choose a sauce"),
+    });
+
+  const onAddPizza = async () => {
+    setErrors({})
+    try {
+          await validationSchema.validate(pizzaForm, ({abortEarly: false}))
+          let copy = {...formData}
+          pizzaForm.id = formData.pizzas?.length ? formData.pizzas.length + 1 : 1
+          copy.pizzas.push(pizzaForm)
+          setFormData(copy)
+          toggle()
+      
+    } catch (validationErrors) {
+      const formattedErrors = validationErrors.inner.reduce((acc, err) => {
+            acc[err.path] = err.message
+            return acc
+        }, {})
+
+        setErrors(formattedErrors)
+    }
   }
 
   return (
@@ -62,14 +86,14 @@ export const CreatePizza = ({formData, setFormData}) => {
                     name="sizeId"
                     value={pizzaForm.sizeId}
                     onChange={handleChange}
-                    // isInvalid= {true}
+                    invalid= {!!errors?.sizeId}
                 
                     >
                     <option value="#">Choose a Size</option>
                     {allSizes.map(e => <option key={`size-${e.id}`} value={e.id}>{`${e.type}  ${formatPrice(e.price)}`}</option>)}
                 
                     </Input>
-                    {/* <FormFeedback type='invalid'></FormFeedback> */}
+                    <FormFeedback type='invalid'>{errors.sizeId}</FormFeedback>
                 </FormGroup>
                 <FormGroup>
                     <Label>Sauce</Label>
@@ -78,30 +102,30 @@ export const CreatePizza = ({formData, setFormData}) => {
                     name="sauceId"
                     value={pizzaForm.sauceId}
                     onChange={handleChange}
-                    // isInvalid= {true}
+                    invalid= {!!errors?.sauceId}
                 
                     >
                     <option value="#">Choose a Sauce</option>
                     {allSauce.map(e => <option key={`sauce-${e.id}`} value={e.id}>{e.type}</option>)}
                 
                     </Input>
-                    {/* <FormFeedback type='invalid'></FormFeedback> */}
+                    <FormFeedback type='invalid'>{errors.sauceId}</FormFeedback>
                 </FormGroup>
                 <FormGroup>
                     <Label>Cheese</Label>
                     <Input
                     type="select"
                     name="cheeseId"
-                    value={pizzaForm.cheeseIdId}
+                    value={pizzaForm.cheeseId}
                     onChange={handleChange}
-                    // isInvalid= {true}
+                    invalid= {!!errors?.cheeseId}
                 
                     >
                     <option value="#">Choose a Cheese</option>
                     {allCheese.map(e => <option key={`cheese-${e.id}`} value={e.id}>{e.type}</option>)}
                 
                     </Input>
-                    {/* <FormFeedback type='invalid'></FormFeedback> */}
+                    <FormFeedback type='invalid'>{errors.cheeseId}</FormFeedback>
                 </FormGroup>
                 <FormGroup>
                     <ToppingsSelection pizzaForm={pizzaForm} setPizzaForm={setPizzaForm} toggleDropdown={toggleDropdown} setDropdownOpen={setDropdownOpen} dropdownOpen={dropdownOpen}/>

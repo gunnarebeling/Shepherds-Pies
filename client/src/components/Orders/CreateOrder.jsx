@@ -19,6 +19,7 @@ export const CreateOrder = () => {
     const [tipPercent, setTipPercent] =useState(0)
     const [customTip, setCustomTip] = useState(0)
     const [submitTip, setSubmitTip] = useState(0)
+
     const navigate = useNavigate()
     const [formData, setFormData] = useState({
         deliveryEmployeeId: 0,
@@ -26,6 +27,7 @@ export const CreateOrder = () => {
         pizzas: [],
         tip: 0
     })
+    
 
     useEffect(() => {
         getAllEmployees().then(setAllEmployees)
@@ -73,16 +75,21 @@ export const CreateOrder = () => {
     }
     const handleSubmit = (e) => {
         e.preventDefault()
-        let copy = {...formData}
+        if (formData.pizzas.length === 0) {
+            window.alert("must have at least one pizza")
+        }else{
+            let copy = {...formData}
+    
+            copy.orderEmployeeId = loggedInUser.id
+            copy.deliveryEmployeeId = formData.deliveryEmployeeId === 0 ? null : parseInt(formData.deliveryEmployeeId)
+            copy.tip = submitTip
+            
+    
+            postOrder(copy).then(
+                navigate("/orders")
+            )
 
-        copy.orderEmployeeId = loggedInUser.id
-        copy.deliveryEmployeeId = formData.deliveryEmployeeId === 0 ? null : parseInt(formData.deliveryEmployeeId)
-        copy.tip = submitTip
-        
-
-        postOrder(copy).then(
-            navigate("/orders")
-        )
+        }
     }
     const handleTipButton = (e) => {
 
