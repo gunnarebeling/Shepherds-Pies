@@ -17,3 +17,9 @@ export const postOrder = (order) => {
         body: JSON.stringify(order)
     })
 }
+
+export const deleteOrder = (id) => {
+    return fetch(`${api_Url}/${id}`,{
+        method: 'DELETE'
+    })
+}

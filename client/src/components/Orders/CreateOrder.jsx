@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useContext, useEffect, useState } from "react"
-import { Button, Form, FormFeedback, FormGroup, Input, Label, Table } from "reactstrap"
+import { Button, Form,  FormGroup, Input, Label} from "reactstrap"
 import { getAllEmployees } from "../../managers/employeeManager"
 import { UserContext } from "../../App"
 import { CreatePizza } from "../Pizza/CreatePizza"

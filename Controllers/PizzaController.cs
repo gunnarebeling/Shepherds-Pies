@@ -26,6 +26,20 @@ public class PizzasController: Controller
     {
         return Ok(_DbContext.Pizzas.ProjectTo<PizzaForOrderDTO>(_mapper.ConfigurationProvider));
     }
+
+    [HttpDelete("{id}")]
+    [Authorize]
+    public IActionResult Delete(string id)
+    {
+        Pizza pizza = _DbContext.Pizzas.SingleOrDefault(p => p.Id == int.Parse(id));
+        if (pizza == null)
+        {
+            return BadRequest();
+        }
+        _DbContext.Pizzas.Remove(pizza);
+        _DbContext.SaveChanges();
+        return NoContent();
+    }
     
     
 }

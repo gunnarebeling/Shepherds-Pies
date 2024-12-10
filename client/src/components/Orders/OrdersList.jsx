@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getAllOrders } from "../../managers/orderManager"
+import { deleteOrder, getAllOrders } from "../../managers/orderManager"
 import { FilterDate } from "./FilterDate"
 import { Table } from "reactstrap"
 import { Link } from "react-router-dom"
@@ -20,6 +20,13 @@ export const OrdersList = () => {
         setFilter(copy)
 
     }, [allOrders])
+
+    const handleDelete = (e) => {
+        const id = e.target.dataset.id
+        deleteOrder(id).then(() => {
+            getAllOrders().then(setAllOrders)
+        })
+    }
 
 
     return (
@@ -51,7 +58,7 @@ export const OrdersList = () => {
                                     <Link to={`/orders/${o.id}`} >details</Link>
                                 </td>
                                 <td>
-                                    <Link to={`${o.id}/edit`} >edit/cancel</Link>
+                                    <Link data-id={o.id} onClick={handleDelete}>delete</Link>
                                 </td>
                             </tr>
                         )
