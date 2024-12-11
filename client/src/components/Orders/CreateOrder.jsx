@@ -160,7 +160,6 @@ export const CreateOrder = () => {
                                     />
                                 </div>
                                 <div className="d-flex justify-content-center ">
-
                                     <Button className="m-2 " onClick={handleNoTip}>no tip</Button>
                                 </div>
 
