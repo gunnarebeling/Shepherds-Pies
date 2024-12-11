@@ -1,18 +1,28 @@
 import { useEffect, useState } from "react"
-import { getOrderDetails } from "../../managers/orderManager"
+import { getOrderDetails, updateDriverForOrder } from "../../managers/orderManager"
 import { Link, useParams } from "react-router-dom"
-import { Table } from "reactstrap"
+import { Button, Input, Table } from "reactstrap"
 import { formatPrice, formatTime } from "../../managers/formatingManager"
 import { deletePizza } from "../../managers/pizzaManager"
+import { UpdatePizza } from "../Pizza/updatePizza"
+import { getAllEmployees } from "../../managers/employeeManager"
+
 
 export const OrderDetails = () => {
     const [order, setOrder] = useState({})
+    const [toggle, setToggle] = useState(false)
+    const [newDriver, setnewDriver] = useState(0)
+    const [allEmployees, setAllEmployees] = useState([])
     const {id} = useParams()
 
     
     useEffect(() => {
         getOrderDetails(id).then(setOrder)
+        getAllEmployees().then(setAllEmployees)
     },[])
+    useEffect(() => {
+        setnewDriver(order.deliveryEmployeeId)
+    },[order])
 
     const handleDelete = (e) => {
         if (order.pizzas.length === 1) {
@@ -24,6 +34,16 @@ export const OrderDetails = () => {
             })
         }
     }
+    const handleChange = (e) => {
+        const driverid = parseInt(e.target.value)
+        setnewDriver(driverid)
+    }
+    const handleSet = () => {
+        updateDriverForOrder(id, newDriver).then(() => {
+            getOrderDetails(id).then(setOrder)
+            setToggle(t => !t)
+        })
+    } 
 
     return (
         <div className="container">
@@ -33,7 +53,23 @@ export const OrderDetails = () => {
             </div>
             <div className="d-flex">
                 <h4 className="m-2">Order Details</h4>
-                <Link className="m-2">edit</Link>
+                {order.deliveryEmployee && <Link className="m-2" onClick={() => setToggle(t => !t)}>edit driver</Link>}
+                {toggle && 
+                    <div className="d-flex">
+                    <Input
+                    type="select"
+                    name="deliveryEmployeeId"
+                    value={newDriver}
+                    onChange={handleChange}
+                    // isInvalid= {true}
+                
+                    >
+                    {allEmployees.map(e => <option key={`employee-${e.id}`} value={e.id}>{e.fullName}</option>)}
+                
+                    </Input>
+                    <Button onClick={handleSet}>set</Button>
+                    </div>
+                }
 
             </div>
             <Table>
@@ -92,8 +128,8 @@ export const OrderDetails = () => {
                                     }
                                 </td>
                                 <td>{formatPrice(p.pizzaTotal)}</td>
-                                <td><Link className="m-2">edit </Link></td>
-                                <td><Link data-id={p.id} onClick={handleDelete}>delete</Link></td>
+                                <td><UpdatePizza pizza={p} setOrder={setOrder} order={order}/></td>
+                                <td><Link className="m-2" onClick={handleDelete}>delete</Link></td>
                 
                             </tr>
                         )

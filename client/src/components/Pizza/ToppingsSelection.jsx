@@ -12,12 +12,24 @@ export const ToppingsSelection = ({pizzaForm, setPizzaForm, dropdownOpen, toggle
   }, [])
   useEffect(() => {
     const selectToppings = allToppings.map(t => {
-        return {id: t.id, checked: false, type: t.type}
+        if (pizzaForm.toppings.some(ft => ft.id === t.id)) {
+          return {id: t.id, checked: true, type: t.type}
+        } else {
+          
+          return {id: t.id, checked: false, type: t.type}
+        }
     })
     setSelectedToppings(selectToppings)
   }, [allToppings])
 
-  useEffect(() => {
+  const handleCheckboxChange = (event) => {
+    event.stopPropagation()
+    const { name, } = event.target;
+    const copy = [...selectedToppings]
+    const foundTopping = copy.find(t => t.id === parseInt(name))
+    foundTopping.checked = !foundTopping.checked
+    
+    setSelectedToppings(copy)
     let pizza = {...pizzaForm}
     let toppings = []
      selectedToppings.forEach(t => {
@@ -28,16 +40,6 @@ export const ToppingsSelection = ({pizzaForm, setPizzaForm, dropdownOpen, toggle
     
     pizza.toppings = toppings
     setPizzaForm(pizza)
-    
-  }, [selectedToppings])
-  const handleCheckboxChange = (event) => {
-    event.stopPropagation()
-    const { name, } = event.target;
-    const copy = [...selectedToppings]
-    const foundTopping = copy.find(t => t.id === parseInt(name))
-    foundTopping.checked = !foundTopping.checked
-
-    setSelectedToppings(copy)
   };
 
 
