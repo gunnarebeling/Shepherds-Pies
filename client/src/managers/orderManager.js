@@ -23,3 +23,8 @@ export const deleteOrder = (id) => {
         method: 'DELETE'
     })
 }
+export const updateDriverForOrder = (id, driverId) => {
+    return fetch(`${api_Url}/${id}/driver/${driverId}`,{
+        method: 'PUT'
+    })
+}

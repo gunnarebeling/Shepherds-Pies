@@ -85,9 +85,11 @@ export const CreateOrder = () => {
             copy.tip = submitTip
             
     
-            postOrder(copy).then(
+            postOrder(copy).then(() => {
                 navigate("/orders")
-            )
+
+            })
+            
 
         }
     }
@@ -153,7 +155,7 @@ export const CreateOrder = () => {
                                         name="amount"
                                         min="0"
                                         step="0.01"
-                                        value={customTip}
+                                        value={customTip || ""}
                                         onChange={handleCustomTip}
                                     />
                                 </div>

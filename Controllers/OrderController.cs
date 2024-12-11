@@ -70,4 +70,18 @@ public class OrdersController: Controller
         _DbContext.SaveChanges();
         return NoContent();
     }
+
+    [HttpPut("{id}/driver/{driverId}")]
+    [Authorize]
+    public IActionResult UpdateDriver(string id, string driverId )
+    {
+        Order order = _DbContext.Orders.SingleOrDefault(o => o.Id == int.Parse(id));
+        if (order == null)
+        {
+            return BadRequest();
+        }
+        order.DeliveryEmployeeId = int.Parse(driverId);
+        _DbContext.SaveChanges();
+        return NoContent();
+    }
 }
