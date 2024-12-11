@@ -42,6 +42,7 @@ export const OrdersList = () => {
                     <tr>
                         <th>Time</th>
                         <th>Dine-in/Delivery</th>
+                        <th>Completed</th>
                         <th>Total</th>
                         <th>details</th>
 
@@ -53,6 +54,7 @@ export const OrdersList = () => {
                             <tr key={`appointment-${o.id}`}>
                                 <th scope="row">{formatTime(o.orderDate)}</th>
                                 <td>{o.deliveryEmployee ? "Delivery" : "Dine-In"}</td>
+                                <td>{o.completed ? "complete" : "not complete"}</td>
                                 <td>{formatPrice(o.total)}</td>
                                 <td>
                                     <Link to={`/orders/${o.id}`} >details</Link>

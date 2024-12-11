@@ -84,4 +84,17 @@ public class OrdersController: Controller
         _DbContext.SaveChanges();
         return NoContent();
     }
+    [HttpPut("{id}/complete")]
+    [Authorize]
+    public IActionResult CompleteOrder(string id )
+    {
+        Order order = _DbContext.Orders.SingleOrDefault(o => o.Id == int.Parse(id));
+        if (order == null)
+        {
+            return BadRequest();
+        }
+        order.Completed = true;
+        _DbContext.SaveChanges();
+        return NoContent();
+    }
 }
