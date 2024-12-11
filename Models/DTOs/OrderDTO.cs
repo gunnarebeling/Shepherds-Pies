@@ -14,15 +14,21 @@ public class OrderDTO
     public bool Completed { get; set; } = false;
     public List<PizzaForOrderDTO> Pizzas { get; set; }
 
-    public decimal Tip { get; set; } 
+    public decimal Tip { get; set; }
+    private decimal deliveryCharge = 5m; 
     public decimal Total
     {
         get
         {
+            
             decimal preTotal =  Pizzas.Aggregate(0m, (total, p) => {
                  total += p.PizzaTotal;
                  return total;
             });
+            if(DeliveryEmployeeId != null )
+            {
+                preTotal += deliveryCharge;
+            }
             return preTotal + Tip;
         }
     }

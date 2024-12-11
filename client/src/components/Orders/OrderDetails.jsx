@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getOrderDetails, updateDriverForOrder } from "../../managers/orderManager"
+import { completeOrder, getOrderDetails, updateDriverForOrder } from "../../managers/orderManager"
 import { Link, useParams } from "react-router-dom"
 import { Button, Input, Table } from "reactstrap"
 import { formatPrice, formatTime } from "../../managers/formatingManager"
@@ -44,6 +44,11 @@ export const OrderDetails = () => {
             setToggle(t => !t)
         })
     } 
+    const handleComplete = () => {
+        completeOrder(id).then(() => {
+            getOrderDetails(id).then(setOrder)
+        })
+    }
 
     return (
         <div className="container">
@@ -93,6 +98,7 @@ export const OrderDetails = () => {
                     <tr>
                         <th>Completed</th>
                         <td>{order.completed ? "completed" : "not completed"}</td>
+                        <td><Button onClick={handleComplete}>Complete</Button></td>
                     </tr>
                 </tbody>
             </Table>

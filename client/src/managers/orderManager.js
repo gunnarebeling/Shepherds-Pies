@@ -28,3 +28,8 @@ export const updateDriverForOrder = (id, driverId) => {
         method: 'PUT'
     })
 }
+export const completeOrder = (id) => {
+    return fetch(`${api_Url}/${id}/complete`,{
+        method: 'PUT'
+    })
+}
